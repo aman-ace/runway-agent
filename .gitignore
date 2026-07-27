@@ -1,0 +1,16 @@
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+
+# Never commit real financials.
+reports/*.md
+!reports/.gitkeep
+!reports/example_report.md
+data/*.csv
+!data/sample_transactions.csv
