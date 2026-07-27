@@ -42,9 +42,9 @@ CUSTOMERS = [
 ]
 
 
-def month_start(i):
-    y = START.year + (START.month - 1 + i) // 12
-    m = (START.month - 1 + i) % 12 + 1
+def month_start(n):
+    y = START.year + (START.month - 1 + n) // 12
+    m = (START.month - 1 + n) % 12 + 1
     return date(y, m, 1)
 
 
@@ -84,7 +84,8 @@ for i in range(MONTHS):
     # --- software subscriptions: steady, grows a little with headcount ---
     seats = 8 if ms < date(2026, 3, 1) else 13
     for v in VENDORS["software"]:
-        add(ms + timedelta(days=random.randint(1, 12)), v, -jitter(seats * random.uniform(9, 46), 0.05))
+        add(ms + timedelta(days=random.randint(1, 12)), v,
+            -jitter(seats * random.uniform(9, 46), 0.05))
 
     # --- marketing: flat, then doubles in May 2026 ---
     mkt = 6_500 if ms < date(2026, 5, 1) else 14_000
@@ -135,7 +136,7 @@ for r in rows:
     bal += r["amount"]
     r["balance"] = round(bal, 2)
 
-with open("data/sample_transactions.csv", "w", newline="") as f:
+with open("data/sample_transactions.csv", "w", newline="", encoding="utf-8") as f:
     w = csv.DictWriter(f, fieldnames=["date", "description", "amount", "balance"])
     w.writeheader()
     w.writerows(rows)

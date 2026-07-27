@@ -186,7 +186,8 @@ def _creep(pivot, min_dollars, max_window=12, monthly_rate=0.04):
         mom = s.pct_change().dropna()
         if rate >= monthly_rate and delta >= min_dollars and mom.max() < 0.25:
             out.append({"kind": "creep", "category": cat, "month": str(months[-1]),
-                        "baseline": round(float(s.iloc[0]), 2), "actual": round(float(s.iloc[-1]), 2),
+                        "baseline": round(float(s.iloc[0]), 2),
+                        "actual": round(float(s.iloc[-1]), 2),
                         "delta": round(float(delta), 2), "pct": round(float(rate), 3),
                         "window": window})
     return out

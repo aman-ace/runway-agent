@@ -45,7 +45,7 @@ RULES = {
 PRIORITY = ["financing", "payroll", "contractors", "cloud", "software", "marketing",
             "facilities", "legal_admin", "travel", "revenue", "other_opex"]
 
-FLOW_BY_CATEGORY = {c: RULES[c][0] for c in RULES}
+FLOW_BY_CATEGORY = {cat: flow for cat, (flow, _patterns) in RULES.items()}
 
 
 def classify_one(description, amount):

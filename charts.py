@@ -26,7 +26,7 @@ def line_chart(labels, series, colors=None, width=680, height=220, y_fmt=None, a
     colors = colors or {}
 
     all_vals = [v for vals in series.values() for v in vals] or [0]
-    vmin, vmax = min(0, min(all_vals)), max(all_vals)
+    vmin, vmax = min(0, *all_vals), max(all_vals)
     if vmax == vmin:
         vmax = vmin + 1
 
@@ -100,7 +100,8 @@ def line_chart(labels, series, colors=None, width=680, height=220, y_fmt=None, a
     parts.append("</svg>")
 
     legend = "".join(
-        f'<span class="legend-item"><i style="background:{colors.get(name, PALETTE[idx % len(PALETTE)])}"></i>'
+        f'<span class="legend-item"><i style="background:'
+        f'{colors.get(name, PALETTE[idx % len(PALETTE)])}"></i>'
         f'{escape(name)}</span>'
         for idx, name in enumerate(series.keys())
     )

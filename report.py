@@ -102,7 +102,8 @@ def fact_sheet(summary, flags, months=6):
     return "\n".join(lines)
 
 
-PROMPT = """You are a finance analyst writing the cash section of a board update for an early-stage startup.
+PROMPT = """You are a finance analyst writing the cash section of a board update \
+for an early-stage startup.
 
 {facts}
 
@@ -264,7 +265,8 @@ Straight line projection. No seasonality, no assumed change in run rate.
 """
 
 
-def render_html(summary, pivot, flags, note, zero_date, months_left, source, model_used, vendors=None):
+def render_html(summary, pivot, flags, note, zero_date, months_left, source,
+                model_used, vendors=None):
     """Self-contained HTML version of the same report: stat tiles, SVG trend
     charts and a category breakdown instead of plain markdown tables. No
     external assets, no JS - safe to open offline or attach to an email."""

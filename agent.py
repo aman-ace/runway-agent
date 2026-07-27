@@ -83,7 +83,7 @@ def main():
         content = report.render(*render_args, vendors=vendors)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(content)
+    out_path.write_text(content, encoding="utf-8")
 
     last = summary.iloc[-1]
     print()

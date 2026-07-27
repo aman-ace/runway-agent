@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "runway-agent"
+version = "0.1.0"
+description = "Burn and runway analysis from a bank transactions CSV, with an optional Gemini-written board commentary."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [{ name = "Aman Chandaliya" }]
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "tabulate>=0.9",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+gemini = ["google-genai>=0.3"]
+ollama = ["ollama>=0.3"]
+dev = ["pytest>=8.0", "pylint>=3.0"]
+
+[project.urls]
+Repository = "https://github.com/aman-ace/runway-agent"
+
+[project.scripts]
+runway-agent = "agent:main"
+
+[tool.setuptools]
+py-modules = ["agent", "burn", "categorize", "report", "charts", "llm", "make_sample_data"]
+
+[tool.pylint.'MESSAGES CONTROL']
+# Each of these is a deliberate choice documented in the code, not an
+# oversight: no docstring padding on self-explanatory functions, lazy
+# imports so optional providers (google-genai, ollama) aren't hard
+# dependencies, and one documented catch-all in llm.py for "anything the
+# provider's SDK might raise" (rate limits, network, quota, bad key).
+disable = [
+    "missing-module-docstring",
+    "missing-class-docstring",
+    "missing-function-docstring",
+    "too-many-arguments",
+    "too-many-positional-arguments",
+    "too-many-locals",
+    "import-outside-toplevel",
+    "broad-exception-caught",
+]
+
+[tool.pylint.FORMAT]
+# categorize.py's vendor rule table is deliberately one pattern-group per
+# line for scannability - wrapping each entry would hurt readability more
+# than a slightly wider limit does.
+max-line-length = 120
+
+[tool.pylint.DESIGN]
+# llm.py's provider dispatch has one early return per branch (none,
+# unsupported, gemini, ollama, unknown) - that's the clearest way to write
+# it, not a sign it needs restructuring.
+max-returns = 8
+
+[tool.pylint.MAIN]
+fail-under = 9.5
